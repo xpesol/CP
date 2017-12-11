@@ -1,0 +1,4 @@
+fcscp_cp_split_view_homepage:
+    path:     /view/{ref}
+    defaults: { _controller: FCSCPCpSplitViewBundle:View:view }
+

@@ -1,0 +1,158 @@
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ asset('css/fcs_style.css') }}" />
+<title>CP Split</title>
+
+<meta http-equiv="content-Type" content="text/html; charset=windows-1252">
+</head>
+<body topmargin="0" leftmargin="0" background="/images/fond_FCS.gif" marginwidth="0" marginheight="0">
+
+<input type="hidden" name="ticket" id="ticket" value="<TMPL_VAR ticket>">
+
+<table class="COLLAPSE" valign="center" cellspacing="0" cellpadding="2" border="0" align="center" width="600">
+  <tbody>
+    <tr>
+      <td class="FILTRE_TITRE" colspan="4" align="left">
+	  <input type="hidden" name="h_code_fournisseur" id="h_code_fournisseur" value="<TMPL_VAR code_fournisseur>">
+	  <input type="hidden" name="h_supplier" id="h_supplier" value="<TMPL_VAR supplier>">
+	  <input type="hidden" name="num_po" id="num_po" value="<TMPL_VAR num_po>">
+	  <font class="FILTRE_TITRE">CP Loading Detail Supplier <TMPL_VAR supplier> </font></td>
+    </tr>
+</tbody>
+</table>
+<br>
+<TMPL_LOOP loop>
+<table class="COLLAPSE" valign="center" cellspacing="0" cellpadding="2" border="0" align="center">
+<input type="hidden" name="delivery_place" id="delivery_place" value="<TMPL_VAR delivery_place>">
+
+  <tbody>
+    <tr>
+      <td class="GTCN" align="center"><div align="left">Loading N&deg;  : * </div></td>
+      <td class="GDN" colspan="3" align="left">
+		  <input name="h_ref" type="text" class="FILTRE" id="h_ref" value="<TMPL_VAR h_ref>" disabled="disabled">
+      </td>
+				
+				      <td class="GTCN" align="center"><div align="left">Contact : * </div></td>
+
+
+      <td class="GDN" colspan="3" align="left"><input name="h_loading_contact" type="text" class="FILTRE" id="h_loading_contact" value="<TMPL_VAR loading_contact>"></td>
+
+    </tr>
+    
+    <tr>
+      <td class="GTCN" align="center" valign="top" nowrap><div align="left">Loading address : * </div></td>
+      <td class="GDN" colspan="3" align="left">
+		<textarea name="h_loading_address" rows="5" class="FILTRE" id="h_loading_address"><TMPL_VAR loading_address></textarea>
+		</td>
+      <td class="GTCN" align="center" valign="top">
+      <div align="left">Whse contact : * </div></td>
+      <td class="GDN" colspan="3" align="left"><textarea name="h_delivery_contact" rows="5" class="FILTRE" id="h_delivery_contact"><TMPL_VAR delivery_contact></textarea></td>
+    </tr>
+	<tr>
+      <td class="GTCN" align="center" valign="top"><div align="left">Remark : * </div></td>
+      <td class="GDN" colspan="5" align="left" ><textarea name="h_remarks" cols="50" rows="5" class="FILTRE" id="h_remarks"><TMPL_VAR remarks></textarea></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="COLLAPSE" valign="center" cellspacing="0" cellpadding="2" border="0" align="center">
+  <tbody>
+    <tr>
+      <td class="GTCN" align="center" colspan="45"><div align="left">Estimated </div></td>
+	  </tr>
+    <tr>
+      <td class="GTCN" align="center"><div align="left">Loading </div></td>
+      <td class="GTCN" align="center"><div align="left">Date/Time  : * </div></td>
+      <td class="GDN" colspan="3" align="left">
+	  
+	  <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0"><TR>
+	  <TD><input class="SAISIE" size="11" maxlength="10" name="h_loading_estimated_date" ID="h_loading_estimated_date" value="<TMPL_VAR planned_loading_date>">&nbsp;</td>
+
+	<td>
+		<select name="h_loading_estimated_time_hour" id="h_loading_estimated_time_hour" >
+			<option value="06">06</option>
+			<option value="07">07</option>
+			<option value="08">08</option>
+			<option value="09">09</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="16">16</option>
+			<option value="17">17</option>
+			<option value="18">18</option>
+			<option value="19">19</option>
+		</select>
+	</td>
+	<td>:</td>
+	<td>
+		<select name="h_loading_estimated_time_minute" id="h_loading_estimated_time_minute">
+			<option value="00">00</option>
+			<option value="15">15</option>
+			<option value="30">30</option>
+			<option value="45">45</option>
+		</select>
+	</td>
+	 </tr></table>
+	 
+	  
+      </td>
+    </tr>
+	<tr>
+      <td class="GTCN" align="center"><div align="left">Delivery </div></td>
+      <td class="GTCN" align="center"><div align="left">Date/Time  : * </div></td>
+      <td class="GDN" colspan="3" align="left">
+	  
+	  <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0"><TR>
+	  <TD><input class="SAISIE" size="11" maxlength="10" name="h_delivery_estimated_date" ID="h_delivery_estimated_date" value="<TMPL_VAR initial_whse_date>">&nbsp;</td>
+
+<td>
+		<select name="h_delivery_estimated_time_hour" id="h_delivery_estimated_time_hour" >
+			<option value="06">06</option>
+			<option value="07">07</option>
+			<option value="08">08</option>
+			<option value="09">09</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="16">16</option>
+			<option value="17">17</option>
+			<option value="18">18</option>
+			<option value="19">19</option>
+		</select>
+	</td>
+	<td>:</td>
+	<td>
+		<select name="h_delivery_estimated_time_minute" id="h_delivery_estimated_time_minute">
+		
+			<option value="00">00</option>
+			<option value="15">15</option>
+			<option value="30">30</option>
+			<option value="45">45</option>
+		</select>
+	</td>
+	 </tr></table>
+	 
+     </td>
+  
+    </tr>
+	
+  </tbody>
+</table>
+
+<br>
+
+
+		  
+</body></html>
+
+{% endblock %}
