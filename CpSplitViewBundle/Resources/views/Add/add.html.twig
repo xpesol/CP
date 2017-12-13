@@ -1,0 +1,219 @@
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ asset('css/fcs_style.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/datepicker.css') }}" />
+<script type="text/javascript" src="{{ asset('js/vspcompiled.js') }}"></script>
+
+<title>CP Split</title>
+
+<meta http-equiv="content-Type" content="text/html; charset=windows-1252">
+</head>
+<body topmargin="0" leftmargin="0" background="/images/fond_FCS.gif" marginwidth="0" marginheight="0">
+
+<input type="hidden" name="ticket" id="ticket" value="<TMPL_VAR ticket>">
+
+
+<table class="COLLAPSE" valign="center" cellspacing="0" cellpadding="2" border="0" align="center" width="600">
+  <tbody>
+	<tr>
+	  <td class="FILTRE_TITRE" colspan="4" align="left">
+	  <font class="FILTRE_TITRE">CP Loading Detail Supplier </font></td>
+	</tr>
+</tbody>
+</table>
+<br>
+	
+
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {# Les erreurs générales du formulaire. #}
+  {{ form_errors(form) }}
+	
+	<table class="COLLAPSE" valign="center" cellspacing="0" cellpadding="2" border="0" align="center">
+	<input type="hidden" name="delivery_place" id="delivery_place" value="<TMPL_VAR delivery_place>">
+
+	  <tbody>
+		<tr>
+		  <td class="GTCN" align="center"><div align="left">Loading N&deg;  : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+		  
+		  	<div class="form-group">
+
+				{# Affichage des erreurs pour ce champ précis. #}
+				{{ form_errors(form.ref) }}
+
+				<div class="col-sm-10">
+				  {# Génération de l'input. #}
+				  {{ form_widget(form.ref, {'attr': {'class': 'form-control'}}) }}
+				</div>
+            </div>
+		  
+		  </td>
+		  <td class="GTCN" align="center"><div align="left">Contact : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+				<div class="form-group">
+
+				{# Affichage des erreurs pour ce champ précis. #}
+				{{ form_errors(form.loadingContact) }}
+
+				<div class="col-sm-10">
+				  {# Génération de l'input. #}
+				  {{ form_widget(form.loadingContact, {'attr': {'class': 'form-control'}}) }}
+				</div>
+            </div>
+		  
+		  </td>
+		</tr>
+		
+		<tr>
+		  <td class="GTCN" align="center" valign="top" nowrap><div align="left">Loading address : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+				<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.loadingAddress) }}
+
+					<div class="col-sm-10">
+					  {# Génération de l'input. #}
+					  {{ form_widget(form.loadingAddress, {'attr': {'class': 'form-control'}}) }}
+					</div>
+			    </div>	
+		  </td>
+		  <td class="GTCN" align="center" valign="top">
+		  <div align="left">Whse contact : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+		  		<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.deliveryContact) }}
+
+					<div class="col-sm-10">
+					  {# Génération de l'input. #}
+					  {{ form_widget(form.deliveryContact, {'attr': {'class': 'form-control'}}) }}
+					</div>
+			   </div>	
+		  </td>
+		</tr>
+		<tr>
+		  <td class="GTCN" align="center" valign="top"><div align="left">Remark : * </div></td>
+		  <td class="GDN" colspan="5" align="left" >
+		  		<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.remarks) }}
+
+					<div class="col-sm-10">
+					  {# Génération de l'input. #}
+					  {{ form_widget(form.remarks, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+		  </td>
+		</tr>
+	  </tbody>
+	</table>
+
+	<br>
+
+	<table class="COLLAPSE" valign="center" cellspacing="0" cellpadding="2" border="0" align="center">
+	  <tbody>
+		<tr>
+		  <td class="GTCN" align="center" colspan="45"><div align="left">Estimated </div></td>
+		  </tr>
+		<tr>
+		  <td class="GTCN" align="center"><div align="left">Loading </div></td>
+		  <td class="GTCN" align="center"><div align="left">Date/Time  : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+		  
+			<table BORDER="0" CELLPADDING="0" CELLSPACING="0">
+				<tr>
+				   <td>
+				     <div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.loadingEstimatedDate) }}
+
+						<div class="col-sm-10">
+						  {# Génération de l'input. #}
+						  {{ form_widget(form.loadingEstimatedDate, {'attr': {'class': 'form-control'}}) }}
+						</div>
+				   </div>
+					   
+				   </td>
+
+					<td>
+					   	<div class="form-group">
+
+						{# Affichage des erreurs pour ce champ précis. #}
+						{{ form_errors(form.loadingEstimatedTime) }}
+
+						<div class="col-sm-10">
+						  {# Génération de l'input. #}
+						  {{ form_widget(form.loadingEstimatedTime, {'attr': {'class': 'form-control'}}) }}
+						</div>
+				   </div>
+					   
+					</td>
+				</tr>
+			</table>
+		
+		  </td>
+		</tr>
+		<tr>
+		  <td class="GTCN" align="center"><div align="left">Delivery </div></td>
+		  <td class="GTCN" align="center"><div align="left">Date/Time  : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+		  	<table BORDER="0" CELLPADDING="0" CELLSPACING="0">
+				<tr>
+				   <td>
+					<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.deliveryEstimatedDate) }}
+
+				   <div class="col-sm-10">
+						  {# Génération de l'input. #}
+						  {{ form_widget(form.deliveryEstimatedDate, {'attr': {'class': 'form-control'}}) }}
+				   </div>
+				   </div>
+				   </td>
+
+					<td>
+					<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.deliveryEstimatedTime) }}
+
+				   <div class="col-sm-10">
+						  {# Génération de l'input. #}
+						  {{ form_widget(form.deliveryEstimatedTime, {'attr': {'class': 'form-control'}}) }}
+				   </div>
+				   </div>
+					</td>
+				</tr>
+			</table>
+
+		 
+		 </td>
+	  
+		</tr>
+		
+	  </tbody>
+	</table>
+	
+  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+  {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(form) }}
+
+
+<br>
+
+		  
+</body></html>
+
+{% endblock %}
+
+

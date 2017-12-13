@@ -2,7 +2,10 @@
 
 namespace FCS\CP\CpSplitViewBundle\Entity;
 
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\Date;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 /**
  * CpLoading
@@ -31,21 +34,21 @@ class CpLoading
     /**
      * @var string
      *
-     * @ORM\Column(name="loadingAdress", type="text", nullable=true)
+     * @ORM\Column(name="loading_address", type="text", nullable=true)
      */
-    private $loadingAdress;
+    private $loadingAddress;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="loadingContact", type="text", nullable=true)
+     * @ORM\Column(name="loading_contact", type="text", nullable=true)
      */
     private $loadingContact;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="deliveryContact", type="text", nullable=true)
+     * @ORM\Column(name="delivery_contact", type="text", nullable=true)
      */
     private $deliveryContact;
 
@@ -59,31 +62,30 @@ class CpLoading
     /**
      * @var string
      *
-     * @ORM\Column(name="loadingEstimatedDate", type="string", length=255, nullable=true)
+     * @ORM\Column(name="loading_estimated_date", type="string", length=255, nullable=true)
      */
     private $loadingEstimatedDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="loadingEstimatedTime", type="string", length=4)
+     * @ORM\Column(name="loading_estimated_time", type="string", length=4, nullable=true)
      */
     private $loadingEstimatedTime;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="deliveryEstimatedDate", type="string", length=8, nullable=true)
+     * @ORM\Column(name="delivery_estimated_date", type="string", length=8, nullable=true)
      */
     private $deliveryEstimatedDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="deliveryEstimatedTime", type="string", length=8, nullable=true)
+     * @ORM\Column(name="delivery_estimated_time", type="string", length=8, nullable=true)
      */
     private $deliveryEstimatedTime;
-
 
     /**
      * Get id
@@ -138,9 +140,9 @@ class CpLoading
      *
      * @return string
      */
-    public function getLoadingAdress()
+    public function getLoadingAddress()
     {
-        return $this->loadingAdress;
+        return $this->loadingAddress;
     }
 
     /**
@@ -236,7 +238,10 @@ class CpLoading
      */
     public function getLoadingEstimatedDate()
     {
-        return $this->loadingEstimatedDate;
+        
+	return date("d/m/Y", strtotime($this->loadingEstimatedDate));
+	
+	return $this->loadingEstimatedDate;
     }
 
     /**
@@ -260,7 +265,7 @@ class CpLoading
      */
     public function getLoadingEstimatedTime()
     {
-        return $this->loadingEstimatedTime;
+        return date('H:i', strtotime($this->loadingEstimatedTime));
     }
 
     /**
@@ -284,7 +289,8 @@ class CpLoading
      */
     public function getDeliveryEstimatedDate()
     {
-        return $this->deliveryEstimatedDate;
+        
+	 return date("d/m/Y", strtotime($this->deliveryEstimatedDate));
     }
 
     /**
@@ -308,7 +314,7 @@ class CpLoading
      */
     public function getDeliveryEstimatedTime()
     {
-        return $this->deliveryEstimatedTime;
+        return date('H:i', strtotime($this->deliveryEstimatedTime));
     }
 }
 
