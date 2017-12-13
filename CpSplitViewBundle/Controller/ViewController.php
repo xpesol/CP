@@ -9,12 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+
+use Symfony\Component\Form\CallbackTransformer;
 
 use FCS\CP\CpSplitViewBundle\Entity\CpLoading;
 use FCS\CP\CpSplitViewBundle\Form\CpLoadingType;
@@ -33,42 +34,18 @@ class ViewController extends Controller
         return $this->render('FCSCPCpSplitViewBundle:View:split.html.twig', array ('detailRef' =>$detailRef));
     }
 	
-	public function addAction($ref, Request $request)
+	public function addAction($refId, Request $request)
     {
 			
-		#$em = $this->getDoctrine()->getManager();
-		
-		# Get Form for $ref
-        #$repositoryCpLoading = $em->getRepository('FCSCPCpSplitViewBundle:CpLoading');	
-        #$detailRef = $repositoryCpLoading->findBy(array('ref' => $ref));	
-      
 		$detailRef =  $this->getDoctrine()
 		  ->getManager()
 		  ->getRepository('FCSCPCpSplitViewBundle:CpLoading')
-		  ->find($ref)
+		  ->find($refId)
 		;
 	  
 		// création du formulaire via CpLoadingType
-		//$formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $detailRef);
 		$form = $this->get('form.factory')->create(CpLoadingType::class, $detailRef);
-
-		//$formBuilder
-		//->add('ref', TextType::class)
-		//->add('loadingAddress', TextareaType::class)
-		//->add('loadingContact', TextType::class)
-		//->add('deliveryContact', TextareaType::class)
-		//->add('remarks', TextareaType::class)
-		#->add('loadingEstimatedDate', DateType::class)
-		#->add('loadingEstimatedTime', TimeType::class)
-		#->add('deliveryEstimatedDate', DateType::class)
-		#->add('deliveryEstimatedTime', TimeType::class)
-		//->add('save', SubmitType::class);
-		
-		 // À partir du formBuilder, on génère le formulaire
-		// $form = $formBuilder->getForm();
-
-
-		 
+ 
 		 // Si la requête est en POST
 		if ($request->isMethod('POST')) 
 		{
@@ -88,7 +65,7 @@ class ViewController extends Controller
 			$request->getSession()->getFlashBag()->add('notice', 'Chargement bien enregistrée.');
 
 			// On redirige vers la page de visualisation de l'annonce nouvellement créée
-			return $this->redirectToRoute('fcscp_cp_split_view_homepage', array('id' => $detailRef->getId()));
+			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getId()));
 		  }
 		}
 		

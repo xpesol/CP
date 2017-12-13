@@ -124,19 +124,19 @@ class CpLoading
     /**
      * Set loadingAdress
      *
-     * @param string $loadingAdress
+     * @param string $loadingAddress
      *
      * @return CpLoading
      */
-    public function setLoadingAdress($loadingAdress)
+    public function setLoadingAddress($loadingAddress)
     {
-        $this->loadingAdress = $loadingAdress;
+        $this->loadingAddress = $loadingAddress;
 
         return $this;
     }
 
     /**
-     * Get loadingAdress
+     * Get loadingAddress
      *
      * @return string
      */
@@ -226,8 +226,9 @@ class CpLoading
      */
     public function setLoadingEstimatedDate($loadingEstimatedDate)
     {
-        $this->loadingEstimatedDate = $loadingEstimatedDate;
-
+		list($day, $month, $year) = split('[/.-]', $loadingEstimatedDate);
+        $this->loadingEstimatedDate = $year.$month.$day;
+		
         return $this;
     }
 
@@ -241,7 +242,7 @@ class CpLoading
         
 	return date("d/m/Y", strtotime($this->loadingEstimatedDate));
 	
-	return $this->loadingEstimatedDate;
+	#return $this->loadingEstimatedDate;
     }
 
     /**
@@ -277,7 +278,8 @@ class CpLoading
      */
     public function setDeliveryEstimatedDate($deliveryEstimatedDate)
     {
-        $this->deliveryEstimatedDate = $deliveryEstimatedDate;
+	    list($day, $month, $year) = split('[/.-]', $deliveryEstimatedDate);
+        $this->deliveryEstimatedDate = $year.$month.$day;
 
         return $this;
     }
