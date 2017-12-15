@@ -70,7 +70,7 @@ class ViewController extends Controller
 		}
 		
 		
-		# Get List entrepot, quantity ordered and mad form po_detail_fnd
+		# Get List Po available for supplier code
 		
 		$listShowAvailableSupplier = array();
 		
@@ -79,8 +79,18 @@ class ViewController extends Controller
 		->getRepository('FCSCPCpSplitViewBundle:CpLoadingShowAvailableSupplier');	
         $listShowAvailableSupplier = $repositoryCpLoadingShowAvailableSupplier->findBy(array('supplierCode' => $supplierCode));		
 		
+		
+		# Get List PO, Sku, packings details for CP ref
+		
+		$listShowDetail = array();
+		
+        $repositoryCpLoadingShowDetail = $this->getDoctrine()
+		->getManager()
+		->getRepository('FCSCPCpSplitViewBundle:CpLoadingShowDetail');	
+        $listShowDetail = $repositoryCpLoadingShowDetail->findBy(array('ref' => $detailRef->getRef()));		
+		
 		// On passe la méthode createView() du formulaire à la vue
 		// afin qu'elle puisse afficher le formulaire toute seule
-	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('form' => $form->createView(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'listShowAvailableSupplier' => $listShowAvailableSupplier));
+	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('form' => $form->createView(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'listShowAvailableSupplier' => $listShowAvailableSupplier, 'listShowDetail' => $listShowDetail));
     }
 }

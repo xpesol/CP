@@ -10,7 +10,7 @@
 
 <meta http-equiv="content-Type" content="text/html; charset=windows-1252">
 </head>
-<body topmargin="0" leftmargin="0" background="/images/fond_FCS.gif" marginwidth="0" marginheight="0">
+<body topmargin="0" leftmargin="0" background="{{ asset('images/fond_FCS.gif')}} " marginwidth="0" marginheight="0">
 
 <input type="hidden" name="ticket" id="ticket" value="<TMPL_VAR ticket>">
 
@@ -267,7 +267,90 @@
 	{% endfor %}
     </tbody>
   </table>
-		  
+		 
+
+<br>
+	<table valign="center" width="800" cellspacing="1" cellpadding="0" border="0" align="center">
+		<tbody>
+		  <tr>
+			<td><font class="GRILLE_NB">loading content</font></td>
+		  </tr>
+		</tbody>
+	  </table>
+	  <table class="GRILLE_DETAIL" valign="center" width="800" cellspacing="1" cellpadding="0" border="0" align="center">
+		<tbody>
+	    {% for showDetail in listShowDetail %}
+		
+		  <tr>
+			<td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">PO</font></td>
+			<td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">sku</font></td>
+
+			<td class="GRILLE_DETAIL_TITRE" align="center">&nbsp;</td>
+		  </tr>
+		  <tr class="ALTERNE_1" id="">
+			<td nowrap="nowrap" align="center"><br>
+			  <a href="" onClick="openWindow('affichage_po.psp?TICKET=<TMPL_VAR ticket>&NUM_PO=<TMPL_VAR num_po>&MORE=0' , 'original_po' , '1000' , (getWindowHeight()) , 0 , 0 , 1 , 0 , (getWindowWidth()/2-500));return false;"> {{ showDetail.numPo }} </a> </td>
+			<td nowrap="nowrap" align="center"> {{ showDetail.skuId }} - {{ showDetail.skuDesignation }} </td>
+			<td nowrap="nowrap" align="center"><a href="" onClick="delete_po_sku('<TMPL_VAR idloading_po_sku>');return false;"><img src="{{ asset('images/Button_PM_Minus.png')}}" width="20" border="0" height="20"></a>
+				<!--]0[-->        </td>
+		  </tr>
+	
+		  <tr class="ALTERNE_2" id="tr_booking_carton_detail_49847_50315">
+			<td class="GRILLE_DETAIL_TITRE"></td>
+			<td colspan="7" nowrap="nowrap" align="left">
+			<table class="GRILLE_DETAIL" valign="center" id="grille_detail" width="50%" cellspacing="1" cellpadding="0" border="0" align="center">
+			  <tbody>
+		
+				<tr>
+				  <td border="3" class="GRILLE_DETAIL_TITRE" nowrap="nowrap" align="center"><font class="GRILLE_DETAIL_TITRE">Pallet family : </font> </td>
+				  <td border="3" class="GRILLE_DETAIL_TITRE" nowrap="nowrap" align="center"><font class="GRILLE_DETAIL_TITRE">Ctn per pallet : </font> </td>
+				  <td class="GRILLE_DETAIL_TITRE" nowrap="nowrap" width="100%" align="center"><font class="GRILLE_DETAIL_TITRE">Nb pallet  * : </font> </td>
+				  <td border="3" class="GRILLE_DETAIL_TITRE" nowrap="nowrap" align="center"><font class="GRILLE_DETAIL_TITRE">Pallet weight : </font> </td>
+				  <td class="GRILLE_DETAIL_TITRE" nowrap="nowrap" width="50" align="left" colspan="2"></td>
+				</tr>
+	
+				<tr>
+				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
+				  <select name="pallet_family" id="pallet_family<TMPL_VAR idloading_po_sku_detail>"  style="text-align:center;background: #FFFACD"  onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;">
+				  <option value="ECO PGS">ECO PGS</option>
+				  <option value="DIN">DIN</option>
+				  <option value="PERDUE">PERDUE</option>
+				  </select>
+				  <script>
+					$('pallet_family<TMPL_VAR idloading_po_sku_detail>').value = '{{ showDetail.palletFamily }}';
+				  </script>
+				  </td>
+				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
+					<input name="pallet_ctn_per" class="FILTRE" id="pallet_ctn_per<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD""  onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" value="{{ showDetail.numberCartonPerPallet }} "  onKeyPress="return is_only_numbers(event, this, 0);" size="14" maxlength="12">
+				  </span> </td>
+				  <td nowrap="nowrap" width="100%" bgcolor="FFFFFF" align="center"><span class="GDN">
+					<input name="pallet_nb" class="FILTRE" id="pallet_nb<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD" onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" onKeyPress="return is_only_numbers(event, this, 0);" value="<TMPL_VAR pallet_nb>" size="14" maxlength="12">
+				  </span> </td>
+				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
+					<input name="pallet_weight" class="FILTRE" id="pallet_weight<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD""  onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" value="{{ showDetail.palletWeight }}"  onKeyPress="return is_only_numbers(event, this, 2);" size="14" maxlength="12">
+				  </span> </td>
+
+				  <td nowrap="nowrap" width="50" bgcolor="FFFFFF" align="center"><a href="" onClick="duplicate_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>');return false;"><img src="{{ asset('images/Button_PM_Copy.png')}}" width="20" border="0" height="20"></a> </td>
+				  <td nowrap="nowrap" width="50" bgcolor="FFFFFF" align="center"><a href="" onClick="delete_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>');return false;"><img src="{{ asset('images/Button_PM_Delete.png')}}" width="20" border="0" height="20"></a> </td>
+
+				</tr>
+				
+			  </tbody>
+			</table></td>
+		  </tr>
+	{% endfor %}
+		</tbody>
+	  </table>
+
+	  <br>
+	  <table id="save_table" width="600" align="center">
+		<tbody>
+		  <tr>
+			<td width="33%" align="center"><a href="" onClick="save_and_exit();return false;"><img src="{{ asset('images/Button_GM_Save.png') }}" width="77" border="0" height="26"></a></td>
+			<td width="33%" align="center"><a href="" onClick="delete_and_exit();return false;"><img src="{{ asset('images/Button_GM_Exit.png') }}" width="77" border="0" height="26"></a></td>
+		  </tr>
+		</tbody>
+	  </table>		 
 
 {% endblock %}
 
