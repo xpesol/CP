@@ -34,7 +34,7 @@ class ViewController extends Controller
         return $this->render('FCSCPCpSplitViewBundle:View:split.html.twig', array ('detailRef' =>$detailRef));
     }
 	
-	public function addAction($refId, Request $request)
+	public function addAction($refId, $supplierInfo, $supplierCode, Request $request)
     {
 			
 		$detailRef =  $this->getDoctrine()
@@ -65,13 +65,22 @@ class ViewController extends Controller
 			$request->getSession()->getFlashBag()->add('notice', 'Chargement bien enregistrée.');
 
 			// On redirige vers la page de visualisation de l'annonce nouvellement créée
-			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getId()));
+			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getId(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode));
 		  }
 		}
 		
+		
+		# Get List entrepot, quantity ordered and mad form po_detail_fnd
+		
+		$listShowAvailableSupplier = array();
+		
+        $repositoryCpLoadingShowAvailableSupplier = $this->getDoctrine()
+		->getManager()
+		->getRepository('FCSCPCpSplitViewBundle:CpLoadingShowAvailableSupplier');	
+        $listShowAvailableSupplier = $repositoryCpLoadingShowAvailableSupplier->findBy(array('supplierCode' => $supplierCode));		
+		
 		// On passe la méthode createView() du formulaire à la vue
 		// afin qu'elle puisse afficher le formulaire toute seule
-	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('form' => $form->createView(),
-	 ));
+	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('form' => $form->createView(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'listShowAvailableSupplier' => $listShowAvailableSupplier));
     }
 }

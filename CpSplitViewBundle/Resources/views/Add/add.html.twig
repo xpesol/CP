@@ -19,7 +19,7 @@
   <tbody>
 	<tr>
 	  <td class="FILTRE_TITRE" colspan="4" align="left">
-	  <font class="FILTRE_TITRE">CP Loading Detail Supplier </font></td>
+	  <font class="FILTRE_TITRE">CP Loading Detail Supplier {{supplierInfo}}</font></td>
 	</tr>
 </tbody>
 </table>
@@ -216,11 +216,58 @@
   {# Fermeture de la balise <form> du formulaire HTML #}
   {{ form_end(form) }}
 
-
 <br>
 
+<table valign="center" width="800" cellspacing="1" cellpadding="0" border="0" align="center">
+    <tbody>
+      <tr>
+        <td><font class="GRILLE_NB">Skus availables to load </font></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="GRILLE_DETAIL" valign="center" width="800" cellspacing="1" cellpadding="0" border="0" align="center">
+    <tbody>
+      <tr>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">PO</font></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><div align="left">			&nbsp;&nbsp;&nbsp;&nbsp;
+         <font class="GRILLE_DETAIL_TITRE">sku</font></div></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE" nowrap>nb carton </font></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE" nowrap>nb pallet </font></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">ESD</font></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center">&nbsp;</td>
+      </tr>
+	
+	{% for availableSupplier in listShowAvailableSupplier %}
+	
+      <tr class="ALTERNE_1" id="tr_available_<TMPL_VAR num_po><TMPL_VAR sku_id>">
+        <td nowrap="nowrap">
+
+		<div class="Style1" align="center">
+			{{availableSupplier.numPo}}
+		</div>
+
+		</td>
+	
+        <td nowrap="nowrap"><div class="Style1" align="center">
+          <div align="left"><a href="" onClick="save_bk_sku_detail('<TMPL_VAR num_po><TMPL_VAR sku_id>', ''); return false;">
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			{{availableSupplier.skuId}}
+			-
+			{{availableSupplier.skuDesignation}}
+		  </a></div>
+        </div></td>
+        <td nowrap="nowrap"><div align="center"> {{ availableSupplier.numberCarton }}</div></td>
+        <td nowrap="nowrap"><div align="center">{{ availableSupplier.numberPallet }}</div></td>
+        <td nowrap="nowrap"><div align="center">{{ availableSupplier.esd }}</div></td>
+        <td nowrap="nowrap"><img onClick="save_detail('<TMPL_VAR num_po>#<TMPL_VAR sku_id>#<TMPL_VAR pallet_nb>#<TMPL_VAR pallet_ctn_per>#<TMPL_VAR pallet_weight>#<TMPL_VAR pallet_family>'); return false;" src="{{ asset('images/Button_PM_Add.png')}} " width="20" border="0" height="20"></td>
+      
+	 
+	</tr>
+	{% endfor %}
+    </tbody>
+  </table>
 		  
-</body></html>
 
 {% endblock %}
 
