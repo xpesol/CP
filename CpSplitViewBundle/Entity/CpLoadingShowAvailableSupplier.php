@@ -76,6 +76,29 @@ class CpLoadingShowAvailableSupplier
      */
     private $esd;
 	
+	/**
+     * @var int
+     *
+     * @ORM\Column(name="pallet_ctn_per", type="integer", nullable=true)
+     */
+    private $numberCartonPerPallet;
+	
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="pallet_family", type="string", nullable=true)
+     */
+    private $palletFamily;
+	
+	
+	/**
+     * @var float
+     *
+     * @ORM\Column(name="pallet_weight", type="float", nullable=true)
+     */
+    private $palletWeight;
+	
 	
 	
     /**
@@ -238,7 +261,7 @@ class CpLoadingShowAvailableSupplier
 	/**
      * Set esd
      *
-     * @param string $esde
+     * @param string $esd
      *
      * @return CpLoadingShowAvailableSupplier
      */
@@ -259,6 +282,78 @@ class CpLoadingShowAvailableSupplier
         return $this->esd;
     }
 	
+	
+	   /**
+     * Set numberCartonPerPallet
+     *
+     * @param int $numberCartonPerPallet
+     *
+     * @return CpLoadingShowAvailableSupplier
+     */
+    public function setNumberCartonPerPallet($numberCartonPerPallet)
+    {
+        $this->numberCartonPerPallet = $numberCartonPerPallet;
+
+        return $this;
+    }
+
+    /**
+     * Get numberCartonPerPallet
+     *
+     * @return int
+     */
+    public function getNumberCartonPerPallet()
+    {
+        return $this->numberCartonPerPallet;
+    }
+		
+	/**
+     * Set palletFamily
+     *
+     * @param string $palletFamily
+     *
+     * @return CpLoadingShowAvailableSupplier
+     */
+    public function setPalletFamily($palletFamily)
+    {
+        $this->palletFamily = $palletFamily;
+
+        return $this;
+    }
+
+    /**
+     * Get palletFamily
+     *
+     * @return string
+     */
+    public function getPalletFamily()
+    {
+        return $this->palletFamily;
+    }
+	
+	/**
+     * Set palletWeight
+     *
+     * @param float $palletWeight
+     *
+     * @return CpLoadingShowAvailableSupplier
+     */
+    public function setPalletWeight($palletWeight)
+    {
+        $this->palletWeight = $palletWeight;
+
+        return $this;
+    }
+
+    /**
+     * Get palletWeight
+     *
+     * @return float
+     */
+    public function getPalletWeight()
+    {
+        return $this->palletWeight;
+    }
 	
 }
 

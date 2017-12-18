@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="{{ asset('css/fcs_style.css') }}" />
 <link rel="stylesheet" href="{{ asset('css/datepicker.css') }}" />
 <script type="text/javascript" src="{{ asset('js/vspcompiled.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/cp_loading.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/prototype.js') }}"></script>
 
 <title>CP Split</title>
 
@@ -260,9 +262,9 @@
         <td nowrap="nowrap"><div align="center"> {{ availableSupplier.numberCarton }}</div></td>
         <td nowrap="nowrap"><div align="center">{{ availableSupplier.numberPallet }}</div></td>
         <td nowrap="nowrap"><div align="center">{{ availableSupplier.esd }}</div></td>
-        <td nowrap="nowrap"><img onClick="save_detail('<TMPL_VAR num_po>#<TMPL_VAR sku_id>#<TMPL_VAR pallet_nb>#<TMPL_VAR pallet_ctn_per>#<TMPL_VAR pallet_weight>#<TMPL_VAR pallet_family>'); return false;" src="{{ asset('images/Button_PM_Add.png')}} " width="20" border="0" height="20"></td>
-      
-	 
+
+        <td nowrap="nowrap"><img onClick="save_detail('{{ availableSupplier.numPo }}#{{ availableSupplier.skuId }}#{{ availableSupplier.numberPallet }}#{{ availableSupplier.numberCartonPerPallet }}#{{ availableSupplier.palletWeight }}#{{ availableSupplier.palletFamily }}#{{ticket}}#{{supplierInfo}}#{{supplierCode}}#{{ref}}'); return false;" src="{{ asset('images/Button_PM_Add.png')}} " width="20" border="0" height="20"></td>
+
 	</tr>
 	{% endfor %}
     </tbody>
@@ -324,7 +326,7 @@
 					<input name="pallet_ctn_per" class="FILTRE" id="pallet_ctn_per<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD""  onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" value="{{ showDetail.numberCartonPerPallet }} "  onKeyPress="return is_only_numbers(event, this, 0);" size="14" maxlength="12">
 				  </span> </td>
 				  <td nowrap="nowrap" width="100%" bgcolor="FFFFFF" align="center"><span class="GDN">
-					<input name="pallet_nb" class="FILTRE" id="pallet_nb<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD" onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" onKeyPress="return is_only_numbers(event, this, 0);" value="<TMPL_VAR pallet_nb>" size="14" maxlength="12">
+					<input name="pallet_nb" class="FILTRE" id="pallet_nb<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD" onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" onKeyPress="return is_only_numbers(event, this, 0);" value="{{ showDetail.numberPallet }}" size="14" maxlength="12">
 				  </span> </td>
 				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
 					<input name="pallet_weight" class="FILTRE" id="pallet_weight<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD""  onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" value="{{ showDetail.palletWeight }}"  onKeyPress="return is_only_numbers(event, this, 2);" size="14" maxlength="12">
@@ -352,6 +354,12 @@
 		</tbody>
 	  </table>		 
 
+	<div id="main_loading_div" style="position:absolute"></div>
+	<div id="div_save_header"></div>
+	<div name="cp_loading_show_available" id="cp_loading_show_available"></div>
+	<div id="div_save_detail"></div>
+	<br>
+	<div name="cp_loading_show_detail" id="cp_loading_show_detail"></div>  
 {% endblock %}
 
 

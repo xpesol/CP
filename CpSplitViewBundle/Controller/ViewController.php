@@ -34,7 +34,7 @@ class ViewController extends Controller
         return $this->render('FCSCPCpSplitViewBundle:View:split.html.twig', array ('detailRef' =>$detailRef));
     }
 	
-	public function addAction($refId, $supplierInfo, $supplierCode, Request $request)
+	public function addAction($refId, $supplierInfo, $supplierCode, $ticket, Request $request)
     {
 			
 		$detailRef =  $this->getDoctrine()
@@ -65,7 +65,7 @@ class ViewController extends Controller
 			$request->getSession()->getFlashBag()->add('notice', 'Chargement bien enregistrée.');
 
 			// On redirige vers la page de visualisation de l'annonce nouvellement créée
-			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getId(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode));
+			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getId(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'ticket' => $ticket));
 		  }
 		}
 		
@@ -91,6 +91,6 @@ class ViewController extends Controller
 		
 		// On passe la méthode createView() du formulaire à la vue
 		// afin qu'elle puisse afficher le formulaire toute seule
-	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('form' => $form->createView(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'listShowAvailableSupplier' => $listShowAvailableSupplier, 'listShowDetail' => $listShowDetail));
+	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('form' => $form->createView(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'ticket' => $ticket, 'ref' => $detailRef->getRef(), 'listShowAvailableSupplier' => $listShowAvailableSupplier, 'listShowDetail' => $listShowDetail));
     }
 }
