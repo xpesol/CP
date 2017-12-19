@@ -92,7 +92,7 @@ class CpLoading
      *
      * @return int
      */
-    public function getId()
+    public function getIdloading()
     {
         return $this->idloading;
     }

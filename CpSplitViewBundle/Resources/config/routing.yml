@@ -5,3 +5,6 @@ fcscp_cp_split_view_homepage:
 fcscp_cp_split_add_homepage:
     path:     /add/{refId}/{supplierInfo}/{supplierCode}/{ticket}
     defaults: { _controller: FCSCPCpSplitViewBundle:View:add }
+fcscp_cp_split_update_detail:
+    path:     /updateDetail/{refId}/{numPo}/{skuId}/{ticket}
+    defaults: { _controller: FCSCPCpSplitViewBundle:View:updateDetail }

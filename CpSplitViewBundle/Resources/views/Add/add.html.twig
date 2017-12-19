@@ -7,6 +7,7 @@
 <script type="text/javascript" src="{{ asset('js/vspcompiled.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/cp_loading.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/prototype.js') }}"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <title>CP Split</title>
 
@@ -263,7 +264,36 @@
         <td nowrap="nowrap"><div align="center">{{ availableSupplier.numberPallet }}</div></td>
         <td nowrap="nowrap"><div align="center">{{ availableSupplier.esd }}</div></td>
 
-        <td nowrap="nowrap"><img onClick="save_detail('{{ availableSupplier.numPo }}#{{ availableSupplier.skuId }}#{{ availableSupplier.numberPallet }}#{{ availableSupplier.numberCartonPerPallet }}#{{ availableSupplier.palletWeight }}#{{ availableSupplier.palletFamily }}#{{ticket}}#{{supplierInfo}}#{{supplierCode}}#{{ref}}'); return false;" src="{{ asset('images/Button_PM_Add.png')}} " width="20" border="0" height="20"></td>
+        <!--<td nowrap="nowrap"><img onClick="save_detail('{{ availableSupplier.numPo }}#{{ availableSupplier.skuId }}#{{ availableSupplier.numberPallet }}#{{ availableSupplier.numberCartonPerPallet }}#{{ availableSupplier.palletWeight }}#{{ availableSupplier.palletFamily }}#{{ticket}}#{{supplierInfo}}#{{supplierCode}}#{{ref}}'); return false;" src="{{ asset('images/Button_PM_Add.png')}} " width="20" border="0" height="20"></td>
+		
+		-->
+		
+		
+		<td nowrap="nowrap"><img id = "add_{{availableSupplier.numPo}}_{{availableSupplier.skuId}}" onClick = "return false;" src="{{ asset('images/Button_PM_Add.png')}} " width="20" border="0" height="20"></td>
+		<div id ="results_{{availableSupplier.numPo}}_{{availableSupplier.skuId}}"> </div>
+		
+		
+		<script>
+        $(document).on('click', '#add_{{availableSupplier.numPo}}_{{availableSupplier.skuId}}', function(){
+            that = $(this);
+            $.ajax({
+                url:'{{ (path('fcscp_cp_split_update_detail', { 'refId' : refId ,'numPo' : availableSupplier.numPo , 'skuId' : availableSupplier.skuId, 'ticket' : ticket } )) }}',
+                type: "POST",
+                data: {
+                    "refId": '{{ refId }}', "numPo" : '{{ availableSupplier.numPo }}', "skuId" : '{{ availableSupplier.skuId }}', "ticket" : '{{ ticket }}'
+                },
+                async: true,
+                success: function (data)
+                {
+                    console.log(data)
+                    $('div#results_{{availableSupplier.numPo}}_{{availableSupplier.skuId}}').html(data.output);
+
+                }
+            });
+            return false;
+
+        });
+        </script>
 
 	</tr>
 	{% endfor %}

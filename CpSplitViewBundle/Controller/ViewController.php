@@ -18,11 +18,13 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\CallbackTransformer;
 
 use FCS\CP\CpSplitViewBundle\Entity\CpLoading;
+use FCS\CP\CpSplitViewBundle\Entity\CpLoadingPoSku;
 use FCS\CP\CpSplitViewBundle\Form\CpLoadingType;
 
 class ViewController extends Controller
 {
 	
+
 	
     public function viewAction($ref)
     {
@@ -35,8 +37,7 @@ class ViewController extends Controller
     }
 	
 	public function addAction($refId, $supplierInfo, $supplierCode, $ticket, Request $request)
-    {
-			
+    {		
 		$detailRef =  $this->getDoctrine()
 		  ->getManager()
 		  ->getRepository('FCSCPCpSplitViewBundle:CpLoading')
@@ -65,10 +66,9 @@ class ViewController extends Controller
 			$request->getSession()->getFlashBag()->add('notice', 'Chargement bien enregistrée.');
 
 			// On redirige vers la page de visualisation de l'annonce nouvellement créée
-			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getId(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'ticket' => $ticket));
+			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getIdloading(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'ticket' => $ticket));
 		  }
 		}
-		
 		
 		# Get List Po available for supplier code
 		
@@ -89,8 +89,42 @@ class ViewController extends Controller
 		->getRepository('FCSCPCpSplitViewBundle:CpLoadingShowDetail');	
         $listShowDetail = $repositoryCpLoadingShowDetail->findBy(array('ref' => $detailRef->getRef()));		
 		
+		
 		// On passe la méthode createView() du formulaire à la vue
 		// afin qu'elle puisse afficher le formulaire toute seule
-	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('form' => $form->createView(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'ticket' => $ticket, 'ref' => $detailRef->getRef(), 'listShowAvailableSupplier' => $listShowAvailableSupplier, 'listShowDetail' => $listShowDetail));
+	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('refId' => $detailRef->getIdloading(), 'form' => $form->createView(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'ticket' => $ticket, 'ref' => $detailRef->getRef(), 'listShowAvailableSupplier' => $listShowAvailableSupplier, 'listShowDetail' => $listShowDetail));
+    }
+	
+	public function updateDetailAction(Request $request, $refId, $numPo, $skuId, $ticket)
+    {
+			
+		$em = $this->getDoctrine()->getManager();	
+
+		$detailRef = $em->getRepository('FCSCPCpSplitViewBundle:CpLoading')
+		  ->find($refId)
+		;
+	  	
+		$repositoryCpLoadingPoSku = $em->getRepository('FCSCPCpSplitViewBundle:CpLoadingPoSku');	
+        $listRowInCpLoadingPoSku = $repositoryCpLoadingPoSku->findBy(array('idloading' => $detailRef->getIdloading(), 'numPo' => $numPo, 'skuId' => $skuId ));		 
+	  
+	   var_dump($listRowInCpLoadingPoSku);
+			
+		if (empty($listRowInCpLoadingPoSku)) {
+			
+		$rowCpLoadingPoSku = new CpLoadingPoSku();	
+		$rowCpLoadingPoSku->setIdloading ($detailRef->getIdloading());
+		$rowCpLoadingPoSku->setNumPO ($numPo);
+		$rowCpLoadingPoSku->setSkuId ($skuId);
+		
+		$em->persist($rowCpLoadingPoSku);
+        $em->flush();
+			
+		}
+		
+		return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $refId, 'supplierInfo' => $skuId, 'supplierCode' => $skuId, 'ticket' => $ticket));
+	
+
+	  #return $this->render('FCSCPCpSplitViewBundle:Add:test.html.twig', array('rowCpLoadingPoSku' => $rowCpLoadingPoSku));
+	  
     }
 }
