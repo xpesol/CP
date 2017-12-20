@@ -24,7 +24,7 @@ class CpLoadingPoSkuDetail
     /**
      * @var int
      *
-     * @ORM\Column(name="idloadingPoSku", type="integer")
+     * @ORM\Column(name="idloading_po_sku", type="integer")
      */
     private $idloadingPoSku;
 

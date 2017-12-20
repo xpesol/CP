@@ -19,6 +19,7 @@ use Symfony\Component\Form\CallbackTransformer;
 
 use FCS\CP\CpSplitViewBundle\Entity\CpLoading;
 use FCS\CP\CpSplitViewBundle\Entity\CpLoadingPoSku;
+use FCS\CP\CpSplitViewBundle\Entity\CpLoadingPoSkuDetail;
 use FCS\CP\CpSplitViewBundle\Form\CpLoadingType;
 
 class ViewController extends Controller
@@ -36,7 +37,7 @@ class ViewController extends Controller
         return $this->render('FCSCPCpSplitViewBundle:View:split.html.twig', array ('detailRef' =>$detailRef));
     }
 	
-	public function addAction($refId, $supplierInfo, $supplierCode, $ticket, Request $request)
+	public function addAction($refId, $supplierInfo, $supplierCode, Request $request)
     {		
 		$detailRef =  $this->getDoctrine()
 		  ->getManager()
@@ -66,7 +67,7 @@ class ViewController extends Controller
 			$request->getSession()->getFlashBag()->add('notice', 'Chargement bien enregistrée.');
 
 			// On redirige vers la page de visualisation de l'annonce nouvellement créée
-			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getIdloading(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'ticket' => $ticket));
+			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getIdloading(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode));
 		  }
 		}
 		
@@ -92,39 +93,45 @@ class ViewController extends Controller
 		
 		// On passe la méthode createView() du formulaire à la vue
 		// afin qu'elle puisse afficher le formulaire toute seule
-	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('refId' => $detailRef->getIdloading(), 'form' => $form->createView(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode, 'ticket' => $ticket, 'ref' => $detailRef->getRef(), 'listShowAvailableSupplier' => $listShowAvailableSupplier, 'listShowDetail' => $listShowDetail));
+	  return $this->render('FCSCPCpSplitViewBundle:Add:add.html.twig', array('refId' => $detailRef->getIdloading(), 'form' => $form->createView(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode,  'ref' => $detailRef->getRef(), 'listShowAvailableSupplier' => $listShowAvailableSupplier, 'listShowDetail' => $listShowDetail));
     }
 	
-	public function updateDetailAction(Request $request, $refId, $numPo, $skuId, $ticket)
-    {
-			
+	public function updateDetailAction(Request $request, $refId, $numPo, $skuId, $numberPallet, $numberCartonPerPallet , $palletWeight, $palletFamily)
+    {		
 		$em = $this->getDoctrine()->getManager();	
 
 		$detailRef = $em->getRepository('FCSCPCpSplitViewBundle:CpLoading')
 		  ->find($refId)
 		;
-	  	
 		$repositoryCpLoadingPoSku = $em->getRepository('FCSCPCpSplitViewBundle:CpLoadingPoSku');	
         $listRowInCpLoadingPoSku = $repositoryCpLoadingPoSku->findBy(array('idloading' => $detailRef->getIdloading(), 'numPo' => $numPo, 'skuId' => $skuId ));		 
 	  
-	   var_dump($listRowInCpLoadingPoSku);
-			
-		if (empty($listRowInCpLoadingPoSku)) {
-			
+		if (empty($listRowInCpLoadingPoSku)) {	
 		$rowCpLoadingPoSku = new CpLoadingPoSku();	
 		$rowCpLoadingPoSku->setIdloading ($detailRef->getIdloading());
 		$rowCpLoadingPoSku->setNumPO ($numPo);
 		$rowCpLoadingPoSku->setSkuId ($skuId);
-		
 		$em->persist($rowCpLoadingPoSku);
         $em->flush();
-			
+		
+        $idloadingPoSku = $rowCpLoadingPoSku->getIdloadingPoSku();		
+		}
+		else {  # get $idloadingPoSku from existing row from table cp_loading_po_sku
+			foreach ( $listRowInCpLoadingPoSku as $rowInCpLoadingPoSku) {		
+				$idloadingPoSku = $rowInCpLoadingPoSku->getIdloadingPoSku();
+			}		
 		}
 		
-		return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $refId, 'supplierInfo' => $skuId, 'supplierCode' => $skuId, 'ticket' => $ticket));
-	
+	    $rowCpLoadingPoSkuDetail = new CpLoadingPoSkuDetail();	
+		$rowCpLoadingPoSkuDetail->setIdloadingPoSku($idloadingPoSku);
+		$rowCpLoadingPoSkuDetail->setNumberPallet($numberPallet);
+		$rowCpLoadingPoSkuDetail->setNumberCartonPerPallet($numberCartonPerPallet);
+		$rowCpLoadingPoSkuDetail->setPalletWeight($palletWeight);
+		$rowCpLoadingPoSkuDetail->setPalletFamily($palletFamily);
+		$em->persist($rowCpLoadingPoSkuDetail);
+        $em->flush();
 
-	  #return $this->render('FCSCPCpSplitViewBundle:Add:test.html.twig', array('rowCpLoadingPoSku' => $rowCpLoadingPoSku));
-	  
+	    return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $refId, 'supplierInfo' => $skuId, 'supplierCode' => $skuId));
+			
     }
 }

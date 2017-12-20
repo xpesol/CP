@@ -3,8 +3,8 @@ fcscp_cp_split_view_homepage:
     defaults: { _controller: FCSCPCpSplitViewBundle:View:view }
 
 fcscp_cp_split_add_homepage:
-    path:     /add/{refId}/{supplierInfo}/{supplierCode}/{ticket}
+    path:     /add/{refId}/{supplierInfo}/{supplierCode}
     defaults: { _controller: FCSCPCpSplitViewBundle:View:add }
 fcscp_cp_split_update_detail:
-    path:     /updateDetail/{refId}/{numPo}/{skuId}/{ticket}
+    path:     /updateDetail/{refId}/{numPo}/{skuId}/{numberPallet}/{numberCartonPerPallet}/{palletWeight}/{palletFamily}
     defaults: { _controller: FCSCPCpSplitViewBundle:View:updateDetail }
