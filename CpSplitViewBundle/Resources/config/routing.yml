@@ -8,3 +8,12 @@ fcscp_cp_split_add_homepage:
 fcscp_cp_split_update_detail:
     path:     /updateDetail/{refId}/{numPo}/{skuId}/{numberPallet}/{numberCartonPerPallet}/{palletWeight}/{palletFamily}
     defaults: { _controller: FCSCPCpSplitViewBundle:View:updateDetail }
+fcscp_cp_split_delete_detail:
+    path:     /deleteDetail/{refId}/{skuId}/{idloadingPoSkuDetail}
+    defaults: { _controller: FCSCPCpSplitViewBundle:View:deleteDetail }	
+fcscp_cp_split_duplicate_detail:
+    path:     /duplicateDetail/{refId}/{skuId}/{idloadingPoSkuDetail}
+    defaults: { _controller: FCSCPCpSplitViewBundle:View:duplicateDetail }	
+fcscp_cp_split_update_po_sku_detail:
+    path:     /updatePoSkuDetail/{refId}/{skuId}/{idloadingPoSkuDetail}
+    defaults: { _controller: FCSCPCpSplitViewBundle:View:updatePoSkuDetail}

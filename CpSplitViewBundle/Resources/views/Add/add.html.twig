@@ -8,6 +8,7 @@
 <script type="text/javascript" src="{{ asset('js/cp_loading.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/prototype.js') }}"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <title>CP Split</title>
 
@@ -280,6 +281,7 @@
                 success: function (data)
                 {
                     console.log(data);
+					location.reload();
 
                 }
             });
@@ -306,21 +308,44 @@
 		<tbody>
 	    {% for showDetail in listShowDetail %}
 		
-		  <tr>
+		  <tr id="tr_{{showDetail.idloadingPoSkuDetail}}">
 			<td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">PO</font></td>
 			<td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">sku</font></td>
 
 			<td class="GRILLE_DETAIL_TITRE" align="center">&nbsp;</td>
 		  </tr>
-		  <tr class="ALTERNE_1" id="">
+		  <tr class="ALTERNE_1" id = "tr_{{showDetail.idloadingPoSkuDetail}}" >
 			<td nowrap="nowrap" align="center"><br>
 			  <a href="" onClick="openWindow('affichage_po.psp?TICKET=<TMPL_VAR ticket>&NUM_PO=<TMPL_VAR num_po>&MORE=0' , 'original_po' , '1000' , (getWindowHeight()) , 0 , 0 , 1 , 0 , (getWindowWidth()/2-500));return false;"> {{ showDetail.numPo }} </a> </td>
 			<td nowrap="nowrap" align="center"> {{ showDetail.skuId }} - {{ showDetail.skuDesignation }} </td>
-			<td nowrap="nowrap" align="center"><a href="" onClick="delete_po_sku('<TMPL_VAR idloading_po_sku>');return false;"><img src="{{ asset('images/Button_PM_Minus.png')}}" width="20" border="0" height="20"></a>
-				<!--]0[-->        </td>
-		  </tr>
+				 
+		 	<td nowrap="nowrap"> <img id = "delete_{{showDetail.idloadingPoSkuDetail}}" onClick = "return false;" src="{{ asset('images/Button_PM_Minus.png')}} " width="20" border="0" height="20"></td>
+			
+		
+			<script>
+			$(document).on('click', '#delete_{{showDetail.idloadingPoSkuDetail}}', function(){
+				that = $(this);
+				$.ajax({
+					url:'{{ (path('fcscp_cp_split_delete_detail', { 'refId' : refId , 'skuId' : showDetail.skuId, 'idloadingPoSkuDetail' : showDetail.idloadingPoSkuDetail } )) }}',
+					type: "POST",
+					data: {
+					},
+					async: true,
+					success: function (data)
+					{
+
+					}
+				});
+				return false;
+
+			});
+			</script>
+
+	</tr>
+		 
+		 </tr>
 	
-		  <tr class="ALTERNE_2" id="tr_booking_carton_detail_49847_50315">
+		  <tr class="ALTERNE_2" id="tr_booking_carton_detail_{{showDetail.idloadingPoSkuDetail}}">
 			<td class="GRILLE_DETAIL_TITRE"></td>
 			<td colspan="7" nowrap="nowrap" align="left">
 			<table class="GRILLE_DETAIL" valign="center" id="grille_detail" width="50%" cellspacing="1" cellpadding="0" border="0" align="center">
@@ -336,27 +361,78 @@
 	
 				<tr>
 				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
-				  <select name="pallet_family" id="pallet_family<TMPL_VAR idloading_po_sku_detail>"  style="text-align:center;background: #FFFACD"  onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;">
+				  <select name="pallet_family" id="pallet_family{{showDetail.idloadingPoSkuDetail}}"  style="text-align:center;background: #FFFACD"  onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;">
 				  <option value="ECO PGS">ECO PGS</option>
 				  <option value="DIN">DIN</option>
 				  <option value="PERDUE">PERDUE</option>
 				  </select>
 				  <script>
-					$('pallet_family<TMPL_VAR idloading_po_sku_detail>').value = '{{ showDetail.palletFamily }}';
+					$('#pallet_family{{showDetail.idloadingPoSkuDetail}} option[value="{{ showDetail.palletFamily }}"]').prop('selected', true);
 				  </script>
 				  </td>
 				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
-					<input name="pallet_ctn_per" class="FILTRE" id="pallet_ctn_per<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD""  onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" value="{{ showDetail.numberCartonPerPallet }} "  onKeyPress="return is_only_numbers(event, this, 0);" size="14" maxlength="12">
+					<input name="pallet_ctn_per" class="FILTRE" id="pallet_ctn_per{{showDetail.idloadingPoSkuDetail}}" style="text-align:center;background: #FFFACD""  value="{{ showDetail.numberCartonPerPallet }} "  onKeyPress="return is_only_numbers(event, this, 0);" size="14" maxlength="12">
 				  </span> </td>
 				  <td nowrap="nowrap" width="100%" bgcolor="FFFFFF" align="center"><span class="GDN">
-					<input name="pallet_nb" class="FILTRE" id="pallet_nb<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD" onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" onKeyPress="return is_only_numbers(event, this, 0);" value="{{ showDetail.numberPallet }}" size="14" maxlength="12">
+					<input name="pallet_nb" class="FILTRE" id="pallet_nb{{showDetail.idloadingPoSkuDetail}}" style="text-align:center;background: #FFFACD" onKeyPress="return is_only_numbers(event, this, 0);" value="{{ showDetail.numberPallet }}" size="14" maxlength="12">
 				  </span> </td>
 				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
-					<input name="pallet_weight" class="FILTRE" id="pallet_weight<TMPL_VAR idloading_po_sku_detail>" style="text-align:center;background: #FFFACD""  onChange="update_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>', this);return false;" value="{{ showDetail.palletWeight }}"  onKeyPress="return is_only_numbers(event, this, 2);" size="14" maxlength="12">
+					<input name="pallet_weight" class="FILTRE" id="pallet_weight{{showDetail.idloadingPoSkuDetail}}" style="text-align:center;background: #FFFACD"" value="{{ showDetail.palletWeight }}"  onKeyPress="return is_only_numbers(event, this, 2);" size="14" maxlength="12">
 				  </span> </td>
 
-				  <td nowrap="nowrap" width="50" bgcolor="FFFFFF" align="center"><a href="" onClick="duplicate_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>');return false;"><img src="{{ asset('images/Button_PM_Copy.png')}}" width="20" border="0" height="20"></a> </td>
-				  <td nowrap="nowrap" width="50" bgcolor="FFFFFF" align="center"><a href="" onClick="delete_po_sku_detail('<TMPL_VAR idloading_po_sku_detail>');return false;"><img src="{{ asset('images/Button_PM_Delete.png')}}" width="20" border="0" height="20"></a> </td>
+				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"> <img id = "duplicate_{{showDetail.idloadingPoSkuDetail}}" onClick = "return false;" src="{{ asset('images/Button_PM_Copy.png')}} " width="20" border="0" height="20"></td>
+					
+				
+					<script>
+					$(document).on('click', '#duplicate_{{showDetail.idloadingPoSkuDetail}}', function(){
+						that = $(this);
+						$.ajax({
+							url:'{{ (path('fcscp_cp_split_duplicate_detail', { 'refId' : refId , 'skuId' : showDetail.skuId, 'idloadingPoSkuDetail' : showDetail.idloadingPoSkuDetail } )) }}',
+							type: "POST",
+							data: {
+							},
+							async: true,
+							success: function (data)
+							{
+                             location.reload();
+							}
+						});
+						return false;
+
+					});
+					</script>
+                
+					<td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"> <img id = "updatePoSkuDetail_{{showDetail.idloadingPoSkuDetail}}" onClick = "return false;" src="{{ asset('images/Save.gif')}} " width="20" border="0" height="20"></td>
+					
+				
+					<script>
+					$(document).on('click', '#updatePoSkuDetail_{{showDetail.idloadingPoSkuDetail}}', function(){
+						that = $(this);
+						var pallet_nb = $("#pallet_nb{{showDetail.idloadingPoSkuDetail}}").val();
+						var pallet_ctn_per = $("#pallet_ctn_per{{showDetail.idloadingPoSkuDetail}}").val();
+						var pallet_weight = $("#pallet_weight{{showDetail.idloadingPoSkuDetail}}").val();
+						var pallet_family = $("#pallet_family{{showDetail.idloadingPoSkuDetail}}").val();
+			
+						
+						var myData =  " 'refId' : {{refId}} , 'skuId' : {{showDetail.skuId}}, 'idloadingPoSku' : {{showDetail.idloadingPoSku}}, 'numberPallet' :  "+pallet_nb+" , 'numberCartonPerPallet' : "+pallet_ctn_per+", 'palletWeight' : "+pallet_weight+",  'palletFamily' : "+pallet_family+" ";
+									
+						console.log(myData);
+										
+						$.ajax({
+							url:'{{(path('fcscp_cp_split_update_po_sku_detail', { 'refId' : refId , 'skuId' : showDetail.skuId, 'idloadingPoSkuDetail' : showDetail.idloadingPoSkuDetail} ))}} ',
+							type: "POST",
+							data: 'numberPallet='+pallet_nb+'&numberCartonPerPallet='+pallet_ctn_per+'&palletWeight='+pallet_weight+'&palletFamily='+pallet_family,
+							async: true,
+							success: function (data)
+							{
+                              location.reload();
+							}
+						});
+						return false;
+
+					});
+					</script>
+				
 
 				</tr>
 				

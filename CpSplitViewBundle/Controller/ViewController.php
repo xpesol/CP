@@ -4,6 +4,7 @@ namespace FCS\CP\CpSplitViewBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -52,11 +53,10 @@ class ViewController extends Controller
 		if ($request->isMethod('POST')) 
 		{
 		  // On fait le lien Requête <-> Formulaire
-		  // À partir de maintenant, la variable detailRef contient les valeurs entrées dans le formulaire par le visiteur
+		  // À partir de maintenant, la variable detailRef contient les valeurs entrées dans le formulaire
 		  $form->handleRequest($request);
 
 		  // On vérifie que les valeurs entrées sont correctes
-		  // (Nous verrons la validation des objets en détail dans le prochain chapitre)
 		  if ($form->isValid()) 
 		  {
 			// On enregistre notre objet $detailRef dans la base de données, par exemple
@@ -66,7 +66,7 @@ class ViewController extends Controller
 
 			$request->getSession()->getFlashBag()->add('notice', 'Chargement bien enregistrée.');
 
-			// On redirige vers la page de visualisation de l'annonce nouvellement créée
+			// On redirige vers la page de visualisation
 			return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $detailRef->getIdloading(), 'supplierInfo' => $supplierInfo, 'supplierCode' => $supplierCode));
 		  }
 		}
@@ -134,4 +134,80 @@ class ViewController extends Controller
 	    return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $refId, 'supplierInfo' => $skuId, 'supplierCode' => $skuId));
 			
     }
+	
+	public function deleteDetailAction(Request $request, $refId, $skuId, $idloadingPoSkuDetail)
+    {		
+		$em = $this->getDoctrine()->getManager();	
+
+		$loadingPoSkuDetail = $em->getRepository('FCSCPCpSplitViewBundle:CpLoadingPoSkuDetail')
+		  ->find($idloadingPoSkuDetail)
+		;
+ 
+ 		$em->remove($loadingPoSkuDetail);
+        $em->flush();
+	  
+	    return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $refId, 'supplierInfo' => $skuId, 'supplierCode' => $skuId));
+			
+    }
+	
+	public function duplicateDetailAction(Request $request, $refId, $skuId, $idloadingPoSkuDetail)
+    {		
+		$em = $this->getDoctrine()->getManager();	
+
+		$loadingPoSkuDetail = $em->getRepository('FCSCPCpSplitViewBundle:CpLoadingPoSkuDetail')
+		  ->find($idloadingPoSkuDetail)
+		;
+ 
+        $duplicateIdloadingPoSku        = $loadingPoSkuDetail->getIdloadingPoSku();
+        $duplicateNumberPallet          = $loadingPoSkuDetail->getNumberPallet();
+		$duplicateNumberCartonPerPallet = $loadingPoSkuDetail->getNumberCartonPerPallet();
+		$duplicatePalletWeight          = $loadingPoSkuDetail->getPalletWeight();
+		$duplicatePalletFamily          = $loadingPoSkuDetail->getPalletFamily();
+		
+		
+ 	    $rowCpLoadingPoSkuDetail = new CpLoadingPoSkuDetail();	
+		$rowCpLoadingPoSkuDetail->setIdloadingPoSku($duplicateIdloadingPoSku);
+		$rowCpLoadingPoSkuDetail->setNumberPallet($duplicateNumberPallet);
+		$rowCpLoadingPoSkuDetail->setNumberCartonPerPallet($duplicateNumberCartonPerPallet);
+		$rowCpLoadingPoSkuDetail->setPalletWeight($duplicatePalletWeight);
+		$rowCpLoadingPoSkuDetail->setPalletFamily($duplicatePalletFamily);
+		
+ 		$em->persist($rowCpLoadingPoSkuDetail);
+        $em->flush();
+	  
+	    return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $refId, 'supplierInfo' => $skuId, 'supplierCode' => $skuId));
+			
+    }
+	
+	
+	public function updatePoSkuDetailAction(Request $request, $refId, $skuId, $idloadingPoSkuDetail)
+    {		
+		
+		$em = $this->getDoctrine()->getManager();	
+
+		$loadingPoSkuDetail = $em->getRepository('FCSCPCpSplitViewBundle:CpLoadingPoSkuDetail')
+		  ->find($idloadingPoSkuDetail)
+		;
+ 
+ 		$numberPallet = $request->request->get('numberPallet');
+		$numberCartonPerPallet = $request->request->get('numberCartonPerPallet');
+		$palletWeight = $request->request->get('palletWeight');
+		$palletFamily = $request->request->get('palletFamily');
+		$idloadingPoSku = $request->request->get('idloadingPoSku');
+
+
+		$loadingPoSkuDetail->setIdloadingPoSku($idloadingPoSku);
+		$loadingPoSkuDetail->setNumberPallet($numberPallet);
+		$loadingPoSkuDetail->setNumberCartonPerPallet($numberCartonPerPallet);
+		$loadingPoSkuDetail->setPalletWeight($palletWeight);
+		$loadingPoSkuDetail->setPalletFamily($palletFamily);
+		
+ 		$em->persist($loadingPoSkuDetail);
+        $em->flush();
+		
+	    return $this->redirectToRoute('fcscp_cp_split_add_homepage', array('refId' => $refId, 'supplierInfo' => $skuId, 'supplierCode' => $skuId));
+		
+    }
+		
+	
 }
