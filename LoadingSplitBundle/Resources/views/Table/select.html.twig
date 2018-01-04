@@ -1,0 +1,71 @@
+
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('css/LoadingSplit.css') }}" />
+    <h3>Repartition des chargements par CP de la commande  {{ po }} </h3>
+	<table class="LoadingSplit">
+	                   					                        
+						<thead>
+							<tr>
+								<th>Entrepot</th>
+								<th>Mad Hub</th>
+								<th>Quantitées commandées</th>
+								{% for loadingsplitsku in listCp %}
+                                <th>{{loadingsplitsku}}</th>
+								{% endfor %}
+								<th> Quantité restant à affecter </th>
+							</tr>
+						</thead>
+						 
+						<tbody>
+                        {% set reste = 0 %}
+						
+						{% for loadingentrepot in listEntrepot | sortByField('loadingentrepot.entrepot')%}
+												                   
+						<tr>
+                          <td>{{loadingentrepot.entrepot}}</td>
+						  <td>
+						  	{{ loadingentrepot.dateMadRt}} 
+		  
+						  </td>
+						  <td>
+						    {{ loadingentrepot.quantites}} 					   							  
+						  </td>
+						  {% for cpId in listCpId %}
+                                <td>		
+
+								 {{ 
+								 render( 
+								        controller(  'FCSCPLoadingSplitBundle:Table:getQuantitiesByLoad', 
+								                      {'entrepot' : loadingentrepot.entrepot, 
+													   'idloadingposku' : cpId, 
+													   'po' : po} 
+												  )
+										) 
+								 }} 
+							 
+								 {% include 'FCSCPLoadingSplitBundle:Table:quantitesLoaded.html.twig' %}
+								                     								
+
+                                </td>
+						  {% endfor %}
+						  <td> 
+						  		{{ 
+								 render( 
+								        controller('FCSCPLoadingSplitBundle:Table:getQuantitiesRemainings')
+										) 
+								 }} 
+							 
+								 {% include 'FCSCPLoadingSplitBundle:Table:quantitesRemaining.html.twig' %}
+						  </td>
+						</tr>
+
+					    {% endfor %}
+
+						</tbody>
+	</table> 
+
+{% endblock %}
+
+
+

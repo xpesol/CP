@@ -1,0 +1,458 @@
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ asset('css/fcs_style.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/datepicker.css') }}" />
+<script type="text/javascript" src="{{ asset('js/vspcompiled.js') }}"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+<title>CP Split</title>
+
+<meta http-equiv="content-Type" content="text/html; charset=windows-1252">
+</head>
+<body topmargin="0" leftmargin="0" background="{{ asset('images/fond_FCS.gif')}} " marginwidth="0" marginheight="0">
+
+<table class="COLLAPSE" valign="center" cellspacing="0" cellpadding="2" border="0" align="center" width="600">
+  <tbody>
+	<tr>
+	  <td class="FILTRE_TITRE" colspan="4" align="left">
+	  <font class="FILTRE_TITRE">CP Loading Detail Supplier {{supplierInfo}} </font></td>
+	</tr>
+</tbody>
+</table>
+<br>
+	
+
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {# Les erreurs générales du formulaire. #}
+  {{ form_errors(form) }}
+	
+	<table class="COLLAPSE" valign="center" cellspacing="0" cellpadding="2" border="0" align="center">
+	<input type="hidden" name="delivery_place" id="delivery_place" value="<TMPL_VAR delivery_place>">
+
+	  <tbody>
+		<tr>
+		  <td class="GTCN" align="center"><div align="left">Loading N&deg;  : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+		  
+		  	<div class="form-group">
+
+				{# Affichage des erreurs pour ce champ précis. #}
+				{{ form_errors(form.ref) }}
+
+				<div class="col-sm-10">
+				  {# Génération de l'input. #}
+				  {{ form_widget(form.ref, {'attr': {'class': 'form-control'}}) }}
+				</div>
+            </div>
+		  
+		  </td>
+		  <td class="GTCN" align="center"><div align="left">Contact : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+				<div class="form-group">
+
+				{# Affichage des erreurs pour ce champ précis. #}
+				{{ form_errors(form.loadingContact) }}
+
+				<div class="col-sm-10">
+				  {# Génération de l'input. #}
+				  {{ form_widget(form.loadingContact, {'attr': {'class': 'form-control'}}) }}
+				</div>
+            </div>
+		  
+		  </td>
+		</tr>
+		
+		<tr>
+		  <td class="GTCN" align="center" valign="top" nowrap><div align="left">Loading address : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+				<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.loadingAddress) }}
+
+					<div class="col-sm-10">
+					  {# Génération de l'input. #}
+					  {{ form_widget(form.loadingAddress, {'attr': {'class': 'form-control'}}) }}
+					</div>
+			    </div>	
+		  </td>
+		  <td class="GTCN" align="center" valign="top">
+		  <div align="left">Whse contact : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+		  		<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.deliveryContact) }}
+
+					<div class="col-sm-10">
+					  {# Génération de l'input. #}
+					  {{ form_widget(form.deliveryContact, {'attr': {'class': 'form-control'}}) }}
+					</div>
+			   </div>	
+		  </td>
+		</tr>
+		<tr>
+		  <td class="GTCN" align="center" valign="top"><div align="left">Remark : * </div></td>
+		  <td class="GDN" colspan="5" align="left" >
+		  		<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.remarks) }}
+
+					<div class="col-sm-10">
+					  {# Génération de l'input. #}
+					  {{ form_widget(form.remarks, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+		  </td>
+		</tr>
+	  </tbody>
+	</table>
+
+	<br>
+
+	<table class="COLLAPSE" valign="center" cellspacing="0" cellpadding="2" border="0" align="center">
+	  <tbody>
+		<tr>
+		  <td class="GTCN" align="center" colspan="45"><div align="left">Estimated </div></td>
+		  </tr>
+		<tr>
+		  <td class="GTCN" align="center"><div align="left">Loading </div></td>
+		  <td class="GTCN" align="center"><div align="left">Date/Time  : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+		  
+			<table BORDER="0" CELLPADDING="0" CELLSPACING="0">
+				<tr>
+				   <td>
+				   
+				     <div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					
+					{{ form_errors(form.loadingEstimatedDate) }}
+
+						<div class="col-sm-10">
+						  {# Génération de l'input. #}
+						  {{ form_widget(form.loadingEstimatedDate, {'attr': {'class': 'form-control'}}) }}
+						</div>
+				   </div>	  
+				   </td>
+
+				   	<SCRIPT LANGUAGE="JAVASCRIPT" type="text/javascript">
+	                   _DP_addToInput('fcs_cp_editcpeditbundle_cploading_loadingEstimatedDate', 1);
+	                </SCRIPT>
+				   
+					<td>
+					   	<div class="form-group">
+
+						{# Affichage des erreurs pour ce champ précis. #}
+						{{ form_errors(form.loadingEstimatedTime) }}
+
+						<div class="col-sm-10">
+						  {# Génération de l'input. #}
+						  {{ form_widget(form.loadingEstimatedTime, {'attr': {'class': 'form-control'}}) }}
+						</div>
+				   </div>
+					   
+					</td>
+				</tr>
+			</table>
+		
+		  </td>
+		</tr>
+		<tr>
+		  <td class="GTCN" align="center"><div align="left">Delivery </div></td>
+		  <td class="GTCN" align="center"><div align="left">Date/Time  : * </div></td>
+		  <td class="GDN" colspan="3" align="left">
+		  	<table BORDER="0" CELLPADDING="0" CELLSPACING="0">
+				<tr>
+				   <td>
+					<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.deliveryEstimatedDate) }}
+
+				   <div class="col-sm-10">
+						  {# Génération de l'input. #}
+						  {{ form_widget(form.deliveryEstimatedDate, {'attr': {'class': 'form-control'}}) }}
+				   </div>
+				   </div>
+				   </td>
+				   	<SCRIPT LANGUAGE="JAVASCRIPT" type="text/javascript">
+	                   _DP_addToInput('fcs_cp_editcpeditbundle_cploading_deliveryEstimatedDate', 1);
+	                </SCRIPT>
+
+					<td>
+					<div class="form-group">
+
+					{# Affichage des erreurs pour ce champ précis. #}
+					{{ form_errors(form.deliveryEstimatedTime) }}
+
+				   <div class="col-sm-10">
+						  {# Génération de l'input. #}
+						  {{ form_widget(form.deliveryEstimatedTime, {'attr': {'class': 'form-control'}}) }}
+				   </div>
+				   </div>
+					</td>
+				</tr>
+			</table>
+	 
+		 </td>  
+		</tr>	
+	  </tbody>
+	</table>
+	
+  <input type="image" name="submit" src="{{ asset('images/Button_GM_Save.png') }}" border="0" alt="Submit" style="margin-left:48%; margin-top:20px;" />
+
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(form) }}
+
+<br>
+
+<table valign="center" width="800" cellspacing="1" cellpadding="0" border="0" align="center">
+    <tbody>
+      <tr>
+        <td><font class="GRILLE_NB">Skus availables to load </font></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="GRILLE_DETAIL" valign="center" width="800" cellspacing="1" cellpadding="0" border="0" align="center">
+    <tbody>
+      <tr>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">PO</font></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><div align="left">			&nbsp;&nbsp;&nbsp;&nbsp;
+         <font class="GRILLE_DETAIL_TITRE">sku</font></div></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE" nowrap>nb carton </font></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE" nowrap>nb pallet </font></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">ESD</font></td>
+        <td class="GRILLE_DETAIL_TITRE" align="center">&nbsp;</td>
+      </tr>
+	
+	{% for availableSupplier in listShowAvailableSupplier %}
+	
+      <tr class="ALTERNE_1" id="tr_available_{{availableSupplier.numPo}}{{availableSupplier.skuId}}">
+        <td nowrap="nowrap">
+
+		<div class="Style1" align="center">
+		<a href="" onclick="openWindow('affichage_po.psp?NUM_PO={{availableSupplier.numPo}}&MORE=0','original_po', '1000' , (getWindowHeight()) , 0 , 0 , 1 , 0 , (getWindowWidth()/2-500));return false;"> 
+			{{availableSupplier.numPo}}
+			</a>
+			
+		</div>
+
+		</td>
+	
+        <td nowrap="nowrap"><div class="Style1" align="center">
+          <div align="left">
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			{{availableSupplier.skuId}}
+			-
+			{{availableSupplier.skuDesignation}}
+		  </div>
+        </div></td>
+        <td nowrap="nowrap"><div align="center"> {{ availableSupplier.numberCarton }}</div></td>
+        <td nowrap="nowrap"><div align="center">{{ availableSupplier.numberPallet }}</div></td>
+        <td nowrap="nowrap"><div align="center">{{ availableSupplier.esd }}</div></td>
+
+		<td nowrap="nowrap"><img id = "add_{{availableSupplier.numPo}}_{{availableSupplier.skuId}}" onClick = "return false;" src="{{ asset('images/Button_PM_Add.png')}} " width="20" border="0" height="20"></td>
+
+		<script>
+        $(document).on('click', '#add_{{availableSupplier.numPo}}_{{availableSupplier.skuId}}', function(){
+            that = $(this);
+            $.ajax({
+                url:'{{ (path('fcscp_edit_cp_update_detail', { 'refId' : refId , 'numPo' : availableSupplier.numPo , 'skuId' : availableSupplier.skuId, 'numberPallet' : availableSupplier.numberPallet, 'numberCartonPerPallet' : availableSupplier.numberCartonPerPallet, 'palletWeight' :availableSupplier.palletWeight, 'palletFamily' :  availableSupplier.palletFamily} )) }}',
+                type: "POST",
+                data: {
+                },
+                async: true,
+                success: function (response)
+                {
+                  document.location.reload(true);
+                }
+            });
+            return false;
+
+        });
+        </script>
+
+	</tr>
+
+	{% endfor %}
+    </tbody>
+  </table>
+		 
+
+<br>
+	<table valign="center" width="800" cellspacing="1" cellpadding="0" border="0" align="center">
+		<tbody>
+		  <tr>
+			<td><font class="GRILLE_NB">loading content</font></td>
+		  </tr>
+		</tbody>
+	  </table>
+	 
+	 
+	  <table class="GRILLE_DETAIL" valign="center" width="800" cellspacing="1" cellpadding="0" border="0" align="center">
+		<tbody>
+
+	    {% for showDetail in listShowDetail %}
+		  
+		  <tr id="trh_{{showDetail.idloadingPoSkuDetail}}">
+			<td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">PO</font></td>
+			<td class="GRILLE_DETAIL_TITRE" align="center"><font class="GRILLE_DETAIL_TITRE">sku</font></td>
+
+			<td class="GRILLE_DETAIL_TITRE" align="center">&nbsp;</td>
+		  </tr>
+		  <tr class="ALTERNE_1" id = "tr_{{showDetail.idloadingPoSkuDetail}}" >
+			<td nowrap="nowrap" align="center"><br>
+	        {{ showDetail.numPo }} </td>
+			<td nowrap="nowrap" align="center"> {{ showDetail.skuId }} - {{ showDetail.skuDesignation }} </td>
+				 
+		 	<td nowrap="nowrap"> <img id = "delete_{{showDetail.idloadingPoSkuDetail}}" onClick = "return false;" src="{{ asset('images/Button_PM_Minus.png')}} " width="20" border="0" height="20"></td>
+			
+		
+			<script>
+			$(document).on('click', '#delete_{{showDetail.idloadingPoSkuDetail}}', function(){
+				that = $(this);
+				$('#trh_{{showDetail.idloadingPoSkuDetail}}').hide();
+				$('#tr_{{showDetail.idloadingPoSkuDetail}}').hide();
+				$('#tr_booking_carton_detail_{{showDetail.idloadingPoSkuDetail}}').hide();
+				$.ajax({
+					url:'{{ (path('fcscp_edit_cp_delete_detail', { 'refId' : refId , 'skuId' : showDetail.skuId, 'idloadingPoSkuDetail' : showDetail.idloadingPoSkuDetail } )) }}',
+					type: "POST",
+					data: {
+					},
+					async: true,
+					success: function ()
+					{
+					document.location.reload(true);
+					}
+				});
+				return false;
+
+			});
+			</script>
+
+	</tr>
+		 
+		 </tr>
+	
+		  <tr class="ALTERNE_2" id="tr_booking_carton_detail_{{showDetail.idloadingPoSkuDetail}}">
+			<td class="GRILLE_DETAIL_TITRE"></td>
+			<td colspan="7" nowrap="nowrap" align="left">
+			<table class="GRILLE_DETAIL" valign="center" id="grille_detail" width="50%" cellspacing="1" cellpadding="0" border="0" align="center">
+			  <tbody>
+		
+				<tr>
+				  <td border="3" class="GRILLE_DETAIL_TITRE" nowrap="nowrap" align="center"><font class="GRILLE_DETAIL_TITRE">Pallet family : </font> </td>
+				  <td border="3" class="GRILLE_DETAIL_TITRE" nowrap="nowrap" align="center"><font class="GRILLE_DETAIL_TITRE">Ctn per pallet : </font> </td>
+				  <td class="GRILLE_DETAIL_TITRE" nowrap="nowrap" width="100%" align="center"><font class="GRILLE_DETAIL_TITRE">Nb pallet  * : </font> </td>
+				  <td border="3" class="GRILLE_DETAIL_TITRE" nowrap="nowrap" align="center"><font class="GRILLE_DETAIL_TITRE">Pallet weight : </font> </td>
+				  <td class="GRILLE_DETAIL_TITRE" nowrap="nowrap" width="50" align="left" colspan="2"></td>
+				</tr>
+	
+				<tr>
+				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
+				  <select name="pallet_family" id="pallet_family{{showDetail.idloadingPoSkuDetail}}"  style="text-align:center;background: #FFFACD" >
+				  <option value="ECO PGS">ECO PGS</option>
+				  <option value="DIN">DIN</option>
+				  <option value="PERDUE">PERDUE</option>
+				  </select>
+				  <script>
+					$('#pallet_family{{showDetail.idloadingPoSkuDetail}} option[value="{{ showDetail.palletFamily }}"]').prop('selected', true);
+				  </script>
+				  </td>
+				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
+					<input name="pallet_ctn_per" class="FILTRE" id="pallet_ctn_per{{showDetail.idloadingPoSkuDetail}}" style="text-align:center;background: #FFFACD""  value="{{ showDetail.numberCartonPerPallet }} "  size="14" maxlength="12">
+				  </span> </td>
+				  <td nowrap="nowrap" width="100%" bgcolor="FFFFFF" align="center"><span class="GDN">
+					<input name="pallet_nb" class="FILTRE" id="pallet_nb{{showDetail.idloadingPoSkuDetail}}" style="text-align:center;background: #FFFACD"  value="{{ showDetail.numberPallet }}" size="14" maxlength="12">
+				  </span> </td>
+				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"><span class="GDN">
+					<input name="pallet_weight" class="FILTRE" id="pallet_weight{{showDetail.idloadingPoSkuDetail}}" style="text-align:center;background: #FFFACD"" value="{{ showDetail.palletWeight }}"   size="14" maxlength="12">
+				  </span> </td>
+
+				  <td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"> <img id = "duplicate_{{showDetail.idloadingPoSkuDetail}}" onClick = "return false;" src="{{ asset('images/Button_PM_Copy.png')}} " width="20" border="0" height="20"></td>
+					
+				
+					<script>
+					$(document).on('click', '#duplicate_{{showDetail.idloadingPoSkuDetail}}', function(){
+						that = $(this);
+						$.ajax({
+							url:'{{ (path('fcscp_edit_cp_duplicate_detail', { 'refId' : refId , 'skuId' : showDetail.skuId, 'idloadingPoSkuDetail' : showDetail.idloadingPoSkuDetail } )) }}',
+							type: "POST",
+							data: {
+							},
+							async: true,
+							success: function (data)
+							{
+                             document.location.reload(true);
+							}
+						});
+						return false;
+
+					});
+					</script>
+                
+					<td border="3" color="FFFACD" nowrap="nowrap" bgcolor="FFFFFF" align="center"> <img id = "updatePoSkuDetail_{{showDetail.idloadingPoSkuDetail}}" onClick = "return false;" src="{{ asset('images/Save.gif')}} " width="20" border="0" height="20"></td>
+					
+				
+					<script>
+					$(document).on('click', '#updatePoSkuDetail_{{showDetail.idloadingPoSkuDetail}}', function(){
+						that = $(this);
+						var pallet_nb = $("#pallet_nb{{showDetail.idloadingPoSkuDetail}}").val();
+						var pallet_ctn_per = $("#pallet_ctn_per{{showDetail.idloadingPoSkuDetail}}").val();
+						var pallet_weight = $("#pallet_weight{{showDetail.idloadingPoSkuDetail}}").val();
+						var pallet_family = $("#pallet_family{{showDetail.idloadingPoSkuDetail}}").val();
+			            var idloadingPoSku = "{{showDetail.idloadingPoSku}}";
+						
+						var myData =  " 'refId' : {{refId}} , 'skuId' : {{showDetail.skuId}}, 'idloadingPoSku' : {{showDetail.idloadingPoSku}}, 'numberPallet' :  "+pallet_nb+" , 'numberCartonPerPallet' : "+pallet_ctn_per+", 'palletWeight' : "+pallet_weight+",  'palletFamily' : "+pallet_family+" ";
+																	
+						$.ajax({
+							url:'{{(path('fcscp_edit_cp_update_po_sku_detail', { 'refId' : refId , 'skuId' : showDetail.skuId, 'idloadingPoSkuDetail' : showDetail.idloadingPoSkuDetail} ))}} ',
+							type: "POST",
+							data: 'numberPallet='+pallet_nb+'&numberCartonPerPallet='+pallet_ctn_per+'&palletWeight='+pallet_weight+'&palletFamily='+pallet_family+'&idloadingPoSku='+idloadingPoSku,
+							async: true,
+							success: function (data)
+							{
+							 document.location.reload(true);
+							}
+						});
+						return false;
+
+					});
+					</script>
+				
+
+				</tr>
+				
+			  </tbody>
+			</table></td>
+		  </tr>
+	{% endfor %}
+		</tbody>
+	  </table>
+
+	  <br>
+	  <table id="save_table" width="600" align="center">
+		<tbody>
+		  <tr>
+		  			<td width="33%" align="center"><a href="" onClick="window.close();return false;"><img src="{{ asset('images/Button_GM_Exit.png') }}" width="77" border="0" height="26" style="margin-left: 13%;" ></a></td>
+
+          </tr>
+		</tbody>
+	  </table>		 
+
+	<div id="main_loading_div" style="position:absolute"></div>
+	<div id="div_save_header"></div>
+	<div name="cp_loading_show_available" id="cp_loading_show_available"></div>
+	<div id="div_save_detail"></div>
+	<br>
+	<div name="cp_loading_show_detail" id="cp_loading_show_detail"></div>  
+{% endblock %}
+
+

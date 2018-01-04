@@ -1,0 +1,6 @@
+split_select:
+    path:    /table/{po}
+    defaults: { _controller: FCSCPLoadingSplitBundle:Table:select }
+FCS_CP_LoadingSplitBundle_table:
+    path:    /FCS/CP/LoadingSplitBundle/table/{po}
+    defaults: { _controller: FCSCPLoadingSplitBundle:Table:select }

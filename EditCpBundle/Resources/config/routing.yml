@@ -1,0 +1,18 @@
+fcscp_edit_cp_homepage:
+    path:     /
+    defaults: { _controller: FCSCPEditCpBundle:Default:index }
+fcscp_edit_cp_add_homepage:
+    path:     /add/{refId}/{supplierInfo}/{supplierCode}
+    defaults: { _controller: FCSCPEditCpBundle:View:add }
+fcscp_edit_cp_update_detail:
+    path:     /updateDetail/{refId}/{numPo}/{skuId}/{numberPallet}/{numberCartonPerPallet}/{palletWeight}/{palletFamily}
+    defaults: { _controller: FCSCPEditCpBundle:View:updateDetail }
+fcscp_edit_cp_delete_detail:
+    path:     /deleteDetail/{refId}/{skuId}/{idloadingPoSkuDetail}
+    defaults: { _controller: FCSCPEditCpBundle:View:deleteDetail }	
+fcscp_edit_cp_duplicate_detail:
+    path:     /duplicateDetail/{refId}/{skuId}/{idloadingPoSkuDetail}
+    defaults: { _controller: FCSCPEditCpBundle:View:duplicateDetail }	
+fcscp_edit_cp_update_po_sku_detail:
+    path:     /updatePoSkuDetail/{refId}/{skuId}/{idloadingPoSkuDetail}
+    defaults: { _controller: FCSCPEditCpBundle:View:updatePoSkuDetail}
